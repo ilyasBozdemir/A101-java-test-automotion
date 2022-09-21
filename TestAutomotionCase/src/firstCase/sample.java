@@ -49,7 +49,7 @@ public class sample {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		// driver.quit();
+		driver.quit();
 	}
 
 	@After
@@ -69,80 +69,72 @@ public class sample {
 
 	@Test
 	public void testStartTest() {
-		boolean testState = false;
-		System.out.println("----------------");
-		testState = testDizaltiCorapBolumuneGit();
-		if (testState)
-			System.out.println("State: Passed.");
-		else
-			System.err.println("State: Failed.");
 
+		String errText = "State: Failed.",
+			   successText = "State: Passed.";
+		//iç içe if blokları patlayan testin bir sonraki adıma gitmesini engeller
+		
 		System.out.println("----------------");
-		testState = testAcilanUrunSiyahMi();
-		if (testState)
-			System.out.println("State: Passed.");
-		else
-			System.err.println("State: Failed.");
-
+		Boolean state = testDizaltiCorapBolumuneGit();
+		String msg = state ? successText : errText;
+		System.out.println(msg);
 		System.out.println("----------------");
-		testState = testSepeteEkle();
-		if (testState)
-			System.out.println("State: Passed.");
-		else
-			System.err.println("State: Failed.");
-
-		System.out.println("----------------");
-		testState = testSepetiGoruntule();
-		if (testState)
-			System.out.println("State: Passed.");
-		else
-			System.err.println("State: Failed.");
-
-		System.out.println("----------------");
-		testState = testSepetiOnayla();
-		if (testState)
-			System.out.println("State: Passed.");
-		else
-			System.err.println("State: Failed.");
-
-		System.out.println("----------------");
-		testState = testUyeOlmadanDevamEt();
-		if (testState)
-			System.out.println("State: Passed.");
-		else
-			System.err.println("State: Failed.");
-
-		System.out.println("----------------");
-		testState = testMailEkrani();
-		if (testState)
-			System.out.println("State: Passed.");
-		else
-			System.err.println("State: Failed.");
-
-		System.out.println("----------------");
-		testState = testAdresEkrani();
-		if (testState)
-			System.out.println("State: Passed.");
-		else
-			System.err.println("State: Failed.");
-
-		System.out.println("----------------");
-		testState = testOdemeEkrani();
-		if (testState)
-			System.out.println("State: Passed.");
-		else
-			System.err.println("State: Failed.");
-
-		System.out.println("----------------");
-
+		if (state) {
+			state = testAcilanUrunSiyahMi();
+			msg = state ? successText : errText;
+			System.out.println(msg);
+			System.out.println("----------------");
+			if (state) {
+				state = testSepeteEkle();
+				msg = state ? successText : errText;
+				System.out.println(msg);
+				System.out.println("----------------");
+				if (state) {
+					state = testSepetiGoruntule();
+					msg = state ? successText : errText;
+					System.out.println(msg);
+					System.out.println("----------------");
+					if (state) {
+						state = testSepetiOnayla();
+						msg = state ? successText : errText;
+						System.out.println(msg);
+						System.out.println("----------------");
+						if (state) {
+							state = testUyeOlmadanDevamEt();
+							msg = state ? successText : errText;
+							System.out.println(msg);
+							System.out.println("----------------");
+							if (state) {
+								state = testMailEkrani();
+								msg = state ? successText : errText;
+								System.out.println(msg);
+								System.out.println("----------------");
+								if (state) {
+									state = testAdresEkrani();
+									msg = state ? successText : errText;
+									System.out.println(msg);
+									System.out.println("----------------");
+									if(state) {
+										 state = testOdemeEkrani();
+										 msg = state ? successText : errText;
+										 System.out.println(msg);
+										 System.out.println("----------------");
+									 }
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public boolean testDizaltiCorapBolumuneGit() {
 		System.out.println("İstenen : Giyim --> Aksesuar--> Kadın İç Giyim--> Dizaltı Çorap bölümüne girilir.");
 
 		driver.get(baseUrl);
-		driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
-
+		//driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
+		 
 		String ModalCerezKullanimiTextXpath = "/html/body/div[2]/div/div[3]/div[1]/div[1]/div/h2";
 		String ModalCerezKullanimiKabulEtXpath = "/html/body/div[2]/div/div[4]/div[1]/div[2]/button[4]";
 
@@ -297,12 +289,9 @@ public class sample {
 			driver.findElement(By.xpath(adresXpath)).sendKeys("test adres 9159 Mireille Ranch Apt. 172");
 
 			state = ElementVarmi(kaydetBtnXpath);
+			
+			ElementClick(driver, kaydetBtnXpath);
 
-			if (state) {
-				ElementClick(driver, kaydetBtnXpath);
-
-			} else
-				return false;
 
 			ElementClick(driver, kargoChkXpath);
 			ElementClick(driver, kaydetveDevamEtBtnXpath);// kaydet ve devam et
@@ -346,7 +335,7 @@ public class sample {
 	}
 
 	public boolean ElementVarmiByName(String name) {
-		boolean present;
+		
 		try {
 			driver.findElement(By.name(name));
 			return true;
@@ -357,5 +346,9 @@ public class sample {
 
 	public void ElementClick(WebDriver driver, String XpathText) {
 		driver.findElement(By.xpath(XpathText)).click();
+	}
+	
+	public void TestMethoduCagir(Boolean callbackTestFunction) {
+		
 	}
 }
