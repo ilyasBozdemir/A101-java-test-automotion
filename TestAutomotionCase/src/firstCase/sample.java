@@ -243,6 +243,9 @@ public class sample {
 	}
 
 	public boolean testAdresEkrani() {
+		
+		//bu kısımda devam et butonuna tıklamıyor
+		//hallettikçe güncellenecektir
 		System.out.println("İstenen: Sonrasında adres ekranı gelir. Adres oluştur dedikten sonra ödeme ekranı gelir.");
 
 		String yeniAdresOlusturXpath = "/html/body/section/section/div/div[2]/div/div[1]/div/div[1]/div[2]/ul[2]/li/a";
@@ -282,7 +285,7 @@ public class sample {
 			Select selectMahalleler = new Select(mahalleler);
 			selectMahalleler.selectByVisibleText("ARALIK MAH (GÜNEYYURT BELDESİ)");
 			selectMahalleler.selectByValue("74651");
-			// mahalle kısmı arada hata veriyor.Çözümünü bulup düzeltilicektir
+			
 
 			Boolean hataVarmi = ElementVarmi("/html/body/div[1]/div/div[2]/form/div[6]/div");
 
