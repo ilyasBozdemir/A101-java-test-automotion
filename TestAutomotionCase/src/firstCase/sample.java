@@ -3,6 +3,7 @@ package firstCase;
 import java.time.Duration;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -50,14 +51,15 @@ public class sample {
 	private static String ilXpath = "/html/body/div[1]/div/div[2]/form/div[5]/div[1]/div/label/div/select";
 	private static String ilceXpath = "/html/body/div[1]/div/div[2]/form/div[5]/div[2]/div/label/div/select";
 	private static String mahalleXpath = "/html/body/div[1]/div/div[2]/form/div[6]/label/div/select";
+	private static String mahalleErrorXpath = "/html/body/div[1]/div/div[2]/form/div[6]/div";
 	private static String adresXpath = "/html/body/div[1]/div/div[2]/form/div[7]/label/textarea";
-	private static String kaydetBtnXpath = "/html/body/div[1]/div/div[2]/form/button[1]";
-	private static String kargoChkXpath = "/html/body/section/section/div/div[2]/div/div[1]/div/div[2]/form/div[2]/div[2]/ul/li[2]/label/div[2]/span";
+	private static String kaydetBtnSelector = "#js-orders-modal-container > div > div.modal-content > form > button.button.green.js-set-country.js-prevent-emoji";
+	private static String kargoMngSelector = "body > section > section > div > div.checkout-addresses.js-tab-content.active > div > div.col-sm-9 > div > div.continue > form > div.cargo > div.cargo-list > ul > li:nth-child(2) > label > div.check > div";
 	private static String kaydetveDevamEtBtnXpath = "/html/body/section/section/div/div[2]/div/div[1]/div/div[2]/form/div[2]/button";
-
+	private static String secilenAdresXpath="/html/body/section/section/div/div[2]/div/div[1]/div/div[1]/div[2]/ul[1]/li/label/div[1]";
 	
 	
-	
+	//
 	
 	/*
 	 * Course Name:A101 Test Otomasyon Practicum Type:First Case Language:Java
@@ -82,7 +84,7 @@ public class sample {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		driver.quit();
+		//driver.quit();
 	}
 
 	@After
@@ -101,7 +103,7 @@ public class sample {
 	}
 
 	@Test
-	public void testStartTest() {
+	public void testStartTest() throws InterruptedException {
 
 		System.out.println("----------------");
 		Boolean state = testDizaltiCorapBolumuneGit();
@@ -156,6 +158,9 @@ public class sample {
 				}
 			}
 		}
+		
+		
+	
 	}
 
 	public boolean testDizaltiCorapBolumuneGit() {
@@ -178,7 +183,8 @@ public class sample {
 
 	public boolean testAcilanUrunSiyahMi() {
 		System.out.println("İstenen : Açılan ürünün siyah olduğu doğrulanır.");
-
+		modalKapat(ModalCerezKullanimiTextXpath, ModalCerezKullanimiKabulEtXpath);
+		modalKapat(ModalCikmadanOnceGozatTextXpath, ModalCikmadanOnceGozatKapatXpath);
 		
 
 		driver.findElement(By.xpath(UrunDetayiAcXpath)).click();
@@ -198,7 +204,8 @@ public class sample {
 
 	public boolean testSepeteEkle() {
 		System.out.println("İstenen: Sepete ekle butonuna tıklanır.");
-
+		modalKapat(ModalCerezKullanimiTextXpath, ModalCerezKullanimiKabulEtXpath);
+		modalKapat(ModalCikmadanOnceGozatTextXpath, ModalCikmadanOnceGozatKapatXpath);
 		
 		boolean state = ElementVarmi(sepeteEkleXpath);
 		if (state) {
@@ -210,7 +217,8 @@ public class sample {
 
 	public boolean testSepetiGoruntule() {
 		System.out.println("İstenen: Sepeti Görüntüle butonuna tıklanır.");
-
+		modalKapat(ModalCerezKullanimiTextXpath, ModalCerezKullanimiKabulEtXpath);
+		modalKapat(ModalCikmadanOnceGozatTextXpath, ModalCikmadanOnceGozatKapatXpath);
 		driver.get(baseUrl + "baskets/basket/");
 		return true;
 
@@ -218,6 +226,7 @@ public class sample {
 
 	public boolean testSepetiOnayla() {
 		System.out.println("İstenen: Sepeti Onayla butonuna tıklanır.");
+		
 
 		boolean state = ElementVarmi(sepetiOnaylaXpath);
 		if (state) {
@@ -229,7 +238,8 @@ public class sample {
 
 	public boolean testUyeOlmadanDevamEt() {
 		System.out.println("İstenen: Üye olmadan devam et butonuna tıklanır.");
-
+		modalKapat(ModalCerezKullanimiTextXpath, ModalCerezKullanimiKabulEtXpath);
+		modalKapat(ModalCikmadanOnceGozatTextXpath, ModalCikmadanOnceGozatKapatXpath);
 		boolean state = ElementVarmi(uyeOlmadanDevamEtXpath);
 		if (state) {
 			ElementClick(driver, uyeOlmadanDevamEtXpath);
@@ -241,7 +251,8 @@ public class sample {
 
 	public boolean testMailEkrani() {
 		System.out.println("İstenen: Mail ekranı gelir.");
-		
+		modalKapat(ModalCerezKullanimiTextXpath, ModalCerezKullanimiKabulEtXpath);
+		modalKapat(ModalCikmadanOnceGozatTextXpath, ModalCikmadanOnceGozatKapatXpath);
 		ElementVarmi(devamEtXpath);
 
 		boolean state = ElementVarmi(devamEtXpath);
@@ -257,10 +268,11 @@ public class sample {
 
 	}
 
-	public boolean testAdresEkrani() {
+	public boolean testAdresEkrani() throws InterruptedException {
 		
 		System.out.println("İstenen: Sonrasında adres ekranı gelir. Adres oluştur dedikten sonra ödeme ekranı gelir.");
-
+		modalKapat(ModalCerezKullanimiTextXpath, ModalCerezKullanimiKabulEtXpath);
+		modalKapat(ModalCikmadanOnceGozatTextXpath, ModalCikmadanOnceGozatKapatXpath);
 		
 		ElementVarmi(yeniAdresOlusturXpath);
 
@@ -276,29 +288,44 @@ public class sample {
 
 			WebElement iller = driver.findElement(By.xpath(ilXpath));
 			Select selectIller = new Select(iller);
-			selectIller.selectByIndex(44);
+			Random rand = new Random();
+			rand.nextInt();
+			selectIller.selectByIndex(rand.nextInt(1,81));
+			
+			Thread.sleep(300);
 
 			WebElement ilceler = driver.findElement(By.xpath(ilceXpath));
 			Select selectIlceler = new Select(ilceler);
-			selectIlceler.selectByIndex(3);
+			
+			selectIlceler.selectByIndex(rand.nextInt(1,5));
 
+			Thread.sleep(300);
+			
 			WebElement mahalleler = driver.findElement(By.xpath(mahalleXpath));
 			Select selectMahalleler = new Select(mahalleler);
-			selectMahalleler.selectByVisibleText("ARALIK MAH (GÜNEYYURT BELDESİ)");
-			selectMahalleler.selectByValue("74651");
 			
-
-			Boolean hataVarmi = ElementVarmi("/html/body/div[1]/div/div[2]/form/div[6]/div");
-
-			driver.findElement(By.xpath(adresXpath)).sendKeys("test adres 9159 Mireille Ranch Apt. 172");
-
-			state = ElementVarmi(kaydetBtnXpath);
+			selectMahalleler.selectByIndex(rand.nextInt(1,5));
 			
-			ElementClick(driver, kaydetBtnXpath);
-
-
-			ElementClick(driver, kargoChkXpath);
-			ElementClick(driver, kaydetveDevamEtBtnXpath);// kaydet ve devam et
+			Thread.sleep(300);
+			
+			WebElement mahalleError = 
+					driver.findElement(By.xpath(mahalleErrorXpath));
+			
+			driver.findElement(By.xpath(adresXpath))
+			.sendKeys("test adres 9159 Mireille Ranch Apt. 172");
+			Thread.sleep(400);
+			
+			
+			
+			driver.findElement(By.cssSelector(kaydetBtnSelector)).click();
+			
+			
+			if(ElementVarmi(secilenAdresXpath)) {
+				Thread.sleep(400);
+				driver.findElement(By.cssSelector(kargoMngSelector)).click();
+				Thread.sleep(200);
+				ElementClick(driver, kaydetveDevamEtBtnXpath);
+			}
 
 			return true;
 		} else
@@ -306,6 +333,7 @@ public class sample {
 	}
 
 	public boolean testOdemeEkrani() {
+		
 		System.out.println(
 				"İstenen: Siparişi tamamla butonuna tıklayarak, ödeme ekranına gidildiği , doğru ekrana yönlendiklerini kontrol edecekler.");
 
