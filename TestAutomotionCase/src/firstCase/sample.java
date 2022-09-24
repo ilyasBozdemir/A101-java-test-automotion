@@ -22,10 +22,43 @@ import org.junit.BeforeClass;
 import org.junit.AfterClass;
 
 public class sample {
+	JavascriptExecutor jse;
 	public static WebDriver driver;
 	private static String baseUrl;
 	private static String chromedriverPath;
+	//
+	private static String errText = "State: Failed.",
+			   successText = "State: Passed.";
+	
+	private static String ModalCerezKullanimiTextXpath = "/html/body/div[2]/div/div[3]/div[1]/div[1]/div/h2";
+	private static String ModalCerezKullanimiKabulEtXpath = "/html/body/div[2]/div/div[4]/div[1]/div[2]/button[4]";
+    private static String ModalCikmadanOnceGozatTextXpath = "/html/body/div[1]/div[2]/div[1]";
+	private static String ModalCikmadanOnceGozatKapatXpath = "/html/body/div[1]/div[1]";
+	private static String UrunDetayiAcXpath = "/html/body/section/section[4]/div[3]/div[2]/div/div[2]/div[2]/div/ul/li[1]/article/div/a/figure";
+	private static String productNameXpath = "/html/body/section/section[3]/div[2]/div[1]/div/div[3]/div[1]/div[1]/div[2]/div/div[2]/div/div[1]/span";
+	private static String uyeOlmadanDevamEtXpath = "/html/body/section/div[1]/div/div[1]/div[1]/div[2]/a";
+	private static String sepetiOnaylaXpath = "/html/body/section/div[1]/div[2]/div/div[2]/div/a";
+	private static String sepeteEkleXpath = "/html/body/section/section[3]/div[2]/div[1]/div/div[3]/div[2]/div[1]/button";
+	private static String devamEtXpath = "/html/body/section/div[1]/div/div[2]/div/div/form/button";
+	private static String inputName = "user_email";
+	private static String myEmailAddress = "bozdemir.ib70@gmail.com";
+	private static String yeniAdresOlusturXpath = "/html/body/section/section/div/div[2]/div/div[1]/div/div[1]/div[2]/ul[2]/li/a";
+	private static String adresBasligiXpath = "/html/body/div[1]/div/div[2]/form/div[2]/div/div/label/input";
+	private static String adXpath = "/html/body/div[1]/div/div[2]/form/div[3]/div[1]/div/label/input";
+	private static String SoyadXpath = "/html/body/div[1]/div/div[2]/form/div[3]/div[2]/div/label/input";
+	private static String CepXpath = "/html/body/div[1]/div/div[2]/form/div[4]/div/div/label/input";
+	private static String ilXpath = "/html/body/div[1]/div/div[2]/form/div[5]/div[1]/div/label/div/select";
+	private static String ilceXpath = "/html/body/div[1]/div/div[2]/form/div[5]/div[2]/div/label/div/select";
+	private static String mahalleXpath = "/html/body/div[1]/div/div[2]/form/div[6]/label/div/select";
+	private static String adresXpath = "/html/body/div[1]/div/div[2]/form/div[7]/label/textarea";
+	private static String kaydetBtnXpath = "/html/body/div[1]/div/div[2]/form/button[1]";
+	private static String kargoChkXpath = "/html/body/section/section/div/div[2]/div/div[1]/div/div[2]/form/div[2]/div[2]/ul/li[2]/label/div[2]/span";
+	private static String kaydetveDevamEtBtnXpath = "/html/body/section/section/div/div[2]/div/div[1]/div/div[2]/form/div[2]/button";
 
+	
+	
+	
+	
 	/*
 	 * Course Name:A101 Test Otomasyon Practicum Type:First Case Language:Java
 	 * Technologies to be used:Selenium Case Detail Uçtan uca ödeme ekranına kadar
@@ -64,16 +97,12 @@ public class sample {
 		driver = new ChromeDriver();
 		baseUrl = "https://www.a101.com.tr/";
 		driver.manage().window().maximize();
-
+		jse = (JavascriptExecutor) driver;
 	}
 
 	@Test
 	public void testStartTest() {
 
-		String errText = "State: Failed.",
-			   successText = "State: Passed.";
-		//iç içe if blokları patlayan testin bir sonraki adıma gitmesini engeller
-		
 		System.out.println("----------------");
 		Boolean state = testDizaltiCorapBolumuneGit();
 		String msg = state ? successText : errText;
@@ -135,17 +164,11 @@ public class sample {
 		driver.get(baseUrl);
 		//driver.manage().timeouts().implicitlyWait(Duration.ofMillis(3000));
 		 
-		String ModalCerezKullanimiTextXpath = "/html/body/div[2]/div/div[3]/div[1]/div[1]/div/h2";
-		String ModalCerezKullanimiKabulEtXpath = "/html/body/div[2]/div/div[4]/div[1]/div[2]/button[4]";
-
-		String ModalCikmadanOnceGozatTextXpath = "/html/body/div[1]/div[2]/div[1]";
-		String ModalCikmadanOnceGozatKapatXpath = "/html/body/div[1]/div[1]";
-
 		modalKapat(ModalCerezKullanimiTextXpath, ModalCerezKullanimiKabulEtXpath);
 		modalKapat(ModalCikmadanOnceGozatTextXpath, ModalCikmadanOnceGozatKapatXpath);
 		driver.get(baseUrl + "giyim-aksesuar/dizalti-corap/");
 
-		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		
 		jse.executeScript("window.scrollBy(0,250)");
 
 		driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1000));
@@ -156,11 +179,10 @@ public class sample {
 	public boolean testAcilanUrunSiyahMi() {
 		System.out.println("İstenen : Açılan ürünün siyah olduğu doğrulanır.");
 
-		String UrunDetayiAcXpath = "/html/body/section/section[4]/div[3]/div[2]/div/div[2]/div[2]/div/ul/li[1]/article/div/a/figure";
-		String productNameXpath = "/html/body/section/section[3]/div[2]/div[1]/div/div[3]/div[1]/div[1]/div[2]/div/div[2]/div/div[1]/span";
+		
 
 		driver.findElement(By.xpath(UrunDetayiAcXpath)).click();
-		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		
 		jse.executeScript("window.scrollBy(0,100)");
 
 		String productName = driver.findElement(By.xpath(productNameXpath)).getText();
@@ -177,7 +199,7 @@ public class sample {
 	public boolean testSepeteEkle() {
 		System.out.println("İstenen: Sepete ekle butonuna tıklanır.");
 
-		String sepeteEkleXpath = "/html/body/section/section[3]/div[2]/div[1]/div/div[3]/div[2]/div[1]/button";
+		
 		boolean state = ElementVarmi(sepeteEkleXpath);
 		if (state) {
 			ElementClick(driver, sepeteEkleXpath);
@@ -197,8 +219,6 @@ public class sample {
 	public boolean testSepetiOnayla() {
 		System.out.println("İstenen: Sepeti Onayla butonuna tıklanır.");
 
-		String sepetiOnaylaXpath = "/html/body/section/div[1]/div[2]/div/div[2]/div/a";
-
 		boolean state = ElementVarmi(sepetiOnaylaXpath);
 		if (state) {
 			ElementClick(driver, sepetiOnaylaXpath);
@@ -209,8 +229,6 @@ public class sample {
 
 	public boolean testUyeOlmadanDevamEt() {
 		System.out.println("İstenen: Üye olmadan devam et butonuna tıklanır.");
-
-		String uyeOlmadanDevamEtXpath = "/html/body/section/div[1]/div/div[1]/div[1]/div[2]/a";
 
 		boolean state = ElementVarmi(uyeOlmadanDevamEtXpath);
 		if (state) {
@@ -223,10 +241,7 @@ public class sample {
 
 	public boolean testMailEkrani() {
 		System.out.println("İstenen: Mail ekranı gelir.");
-		String devamEtXpath = "/html/body/section/div[1]/div/div[2]/div/div/form/button";
-		String inputName = "user_email";
-		String myEmailAddress = "bozdemir.ib70@gmail.com";
-
+		
 		ElementVarmi(devamEtXpath);
 
 		boolean state = ElementVarmi(devamEtXpath);
@@ -244,30 +259,16 @@ public class sample {
 
 	public boolean testAdresEkrani() {
 		
-		//bu kısımda devam et butonuna tıklamıyor
-		//hallettikçe güncellenecektir
 		System.out.println("İstenen: Sonrasında adres ekranı gelir. Adres oluştur dedikten sonra ödeme ekranı gelir.");
 
-		String yeniAdresOlusturXpath = "/html/body/section/section/div/div[2]/div/div[1]/div/div[1]/div[2]/ul[2]/li/a";
+		
 		ElementVarmi(yeniAdresOlusturXpath);
 
 		boolean state = ElementVarmi(yeniAdresOlusturXpath);
 		if (state) {
 			ElementClick(driver, yeniAdresOlusturXpath);
 			//
-			String adresBasligiXpath = "/html/body/div[1]/div/div[2]/form/div[2]/div/div/label/input";
-			String adXpath = "/html/body/div[1]/div/div[2]/form/div[3]/div[1]/div/label/input";
-			String SoyadXpath = "/html/body/div[1]/div/div[2]/form/div[3]/div[2]/div/label/input";
-			String CepXpath = "/html/body/div[1]/div/div[2]/form/div[4]/div/div/label/input";
-
-			String ilXpath = "/html/body/div[1]/div/div[2]/form/div[5]/div[1]/div/label/div/select";
-			String ilceXpath = "/html/body/div[1]/div/div[2]/form/div[5]/div[2]/div/label/div/select";
-			String mahalleXpath = "/html/body/div[1]/div/div[2]/form/div[6]/label/div/select";
-			String adresXpath = "/html/body/div[1]/div/div[2]/form/div[7]/label/textarea";
-			String kaydetBtnXpath = "/html/body/div[1]/div/div[2]/form/button[1]";
-			String kargoChkXpath = "/html/body/section/section/div/div[2]/div/div[1]/div/div[2]/form/div[2]/div[2]/ul/li[2]/label/div[2]/span";
-			String kaydetveDevamEtBtnXpath = "/html/body/section/section/div/div[2]/div/div[1]/div/div[2]/form/div[2]/button";
-
+			
 			driver.findElement(By.xpath(adresBasligiXpath)).sendKeys("My Test Adress");
 			driver.findElement(By.xpath(adXpath)).sendKeys("Ilyas");
 			driver.findElement(By.xpath(SoyadXpath)).sendKeys("Bozdemir");
